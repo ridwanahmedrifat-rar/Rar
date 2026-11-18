@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* FIX: Tailwind v4's `dark:` variant defaults to the OS-level
+   `prefers-color-scheme` media query unless you register a custom
+   variant. Without this line, any `dark:...` utility class in the
+   app (SectionHeader.jsx, Skeleton.jsx, etc.) ignores your in-app
+   toggle entirely and just follows the system setting instead. This
+   makes `dark:` respond to the `.dark` class ThemeContext puts on
+   <html>, exactly like the CSS variables below already do. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* -----------------------------
+   Theme Tokens
+------------------------------ */
+
+@theme {
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-card: #ffffff;
+
+  --color-foreground: #111827;
+  --color-muted: #6b7280;
+
+  --color-border: #e5e7eb;
+
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* -----------------------------
+   Dark Theme
+------------------------------ */
+
+.dark {
+  --color-background: #0a0a0a;
+  --color-surface: #111111;
+  --color-card: #18181b;
+
+  --color-foreground: #fafafa;
+  --color-muted: #a1a1aa;
+
+  --color-border: #27272a;
+
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+}
+
+/* -----------------------------
+   Gold shimmer text for the hero name
+----------------------------- */
+
+.gold-shimmer {
+  background: linear-gradient(
+    110deg,
+    #b45309 0%,
+    #fbbf24 25%,
+    #fef3c7 50%,
+    #f59e0b 75%,
+    #b45309 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 4s linear infinite;
+}
+
+@keyframes gold-shimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
